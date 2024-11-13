@@ -1,121 +1,56 @@
 {
 	"scopeName": "source.test-script",
 	"name": "TestScript",
-	"patterns": [
-	  { "include": "#comments" },
-	  { "include": "#tests" },
-	  { "include": "#expressions" }
-	],
 	"repository": {
-	  "comments": {
-		"match": "//.*$",
-		"name": "comment.line.double-slash.test_script"
-	  },
-	  "tests": {
-		"begin": "([a-zA-Z_][\\w\\d_]*)\\s*(\\()",
-		"beginCaptures": {
-		  "1": { "name": "entity.name.function.test.test_script" },
-		  "2": { "name": "punctuation.definition.parameters.begin.test_script" }
-		},
-		"end": "\\)",
-		"endCaptures": {
-		  "0": { "name": "punctuation.definition.parameters.end.test_script" }
-		},
-		"patterns": [
-		  { "include": "#strings" }
-		]
-	  },
-	  "expressions": {
-		"patterns": [
-		  { "include": "#typecast_expressions" },
-		  { "include": "#declarations" },
-		  { "include": "#assignments" },
-		  { "include": "#function_calls" },
-		  { "include": "#built_in_functions" },
-		  { "include": "#for_loops" },
-		  { "include": "#binary_expressions" },
-		  { "include": "#strings" },
-		  { "include": "#numbers" },
-		  { "include": "#regexes" },
-		  { "include": "#identifiers" }
-		]
-	  },
-	  "typecast_expressions": {
-		"begin": "\\s+(as)\\s+(string|int|regex)",
-		"beginCaptures": {
-		  "1": { "name": "keyword.operator.type.test_script" },
-		  "2": { "name": "support.type.test_script" }
-		},
-		"end": "(?=[;,\\)\\}])",
-		"patterns": [
-		  { "include": "#expressions" }
-		]
-	  },
-	"declarations": {
-		"match": "(let|const)\\s+([a-zA-Z_][\\w\\d_]*)\\s*:\\s*(string|int|regex)\\s*(=)",
-		"captures": {
-		  "1": { "name": "storage.type.test_script" },
-		  "2": { "name": "variable.other.declaration.test_script" },
-		  "3": { "name": "support.type.test_script" },
-		  "4": { "name": "keyword.operator.assignment.test_script" }
-		}
-	  },
-	  "assignments": {
-		"match": "([a-zA-Z_][\\w\\d_]*)\\s*(=)",
-		"captures": {
-		  "1": { "name": "variable.other.assignment.test_script" },
-		  "2": { "name": "keyword.operator.assignment.test_script" }
-		}
-	  },
-	  "function_calls": {
-		"begin": "([a-zA-Z_][\\w\\d_]*)\\s*(\\()",
-		"beginCaptures": {
-		  "1": { "name": "entity.name.function.test_script" },
-		  "2": { "name": "punctuation.definition.parameters.begin.test_script" }
-		},
-		"end": "\\)",
-		"endCaptures": {
-		  "0": { "name": "punctuation.definition.parameters.end.test_script" }
-		},
-		"patterns": [
-		  { "include": "#expressions" }
-		]
-	  },
-	  "built_in_functions": {
-		"begin": "(print|println|input|output)\\s*(\\()",
-		"beginCaptures": {
-		  "1": { "name": "support.function.built-in.test_script" },
-		  "2": { "name": "punctuation.definition.parameters.begin.test_script" }
-		},
-		"end": "\\)",
-		"endCaptures": {
-		  "0": { "name": "punctuation.definition.parameters.end.test_script" }
-		},
-		"patterns": [
-		  { "include": "#expressions" }
-		]
-	  },
-	  "for_loops": {
-		"begin": "(for)\\s+([a-zA-Z_][\\w\\d_]*)\\s*:\\s*(string|int|regex)\\s+(in)",
-		"beginCaptures": {
-		  "1": { "name": "keyword.control.for.test_script" },
-		  "2": { "name": "variable.other.declaration.test_script" },
-		  "3": { "name": "support.type.test_script" },
-		  "4": { "name": "keyword.operator.in.test_script" }
-		},
-		"end": "(?<=\\})|(?=;)",
-		"patterns": [
-		  { "include": "#expressions" },
-		  { "include": "#block" }
-		]
-	  },
-	  "binary_expressions": {
+	  "keywords": {
 		"patterns": [
 		  {
-			"match": "[+\\-*/]",
-			"name": "keyword.operator.arithmetic.test_script"
+			"name": "keyword.control.test_script",
+			"match": "\\b(if|else|for|in)\\b"
+		  },
+		  {
+			"name": "storage.type.test_script",
+			"match": "\\b(let|const)\\b"
+		  },
+		  {
+			"name": "support.type.test_script",
+			"match": "\\b(string|int|regex|bool)\\b"
+		  },
+		  {
+			"name": "keyword.operator.type.test_script",
+			"match": "\\b(as)\\b"
+		  },
+		  {
+			"name": "support.function.built-in.test_script",
+			"match": "\\b(print|println|input|output)\\b"
 		  }
 		]
+	  },
+	  "test-definitions": {
+		"begin": "([a-zA-Z_][\\w\\d_]*)\\s*(\\()",
+		"beginCaptures": {
+		  "1": {
+			"name": "entity.name.function.test.test_script"
+		  },
+		  "2": {
+			"name": "punctuation.definition.parameters.begin.test_script"
+		  }
+		},
+		"end": "\\)",
+		"endCaptures": {
+		  "0": {
+			"name": "punctuation.definition.parameters.end.test_script"
+		  }
+		},
+		"patterns": [
+		  {
+			"include": "#strings"
+		  }
+		]
+	  },
+	  "numbers": {
+		"match": "\\b\\d+\\b",
+		"name": "constant.numeric.test_script"
 	  },
 	  "strings": {
 		"begin": "\"",
@@ -128,31 +63,61 @@
 		  }
 		]
 	  },
-	  "numbers": {
-		"match": "\\b\\d+\\b",
-		"name": "constant.numeric.test_script"
-	  },
 	  "regexes": {
 		"begin": "`",
 		"end": "`",
 		"name": "string.regexp.test_script"
 	  },
-	  "identifiers": {
-		"match": "[a-zA-Z_][\\w\\d_]*",
-		"name": "variable.other.test_script"
+	  "booleans": {
+		"match": "\\b(true|false)\\b",
+		"name": "constant.language.boolean.test_script"
 	  },
-	  "block": {
-		"begin": "\\{",
-		"beginCaptures": {
-		  "0": { "name": "punctuation.definition.block.begin.test_script" }
-		},
-		"end": "\\}",
-		"endCaptures": {
-		  "0": { "name": "punctuation.definition.block.end.test_script" }
-		},
+	  "operators": {
 		"patterns": [
-		  { "include": "#expressions" }
+		  {
+			"name": "keyword.operator.arithmetic.test_script",
+			"match": "[+\\-*/]"
+		  },
+		  {
+			"name": "keyword.operator.comparison.test_script",
+			"match": "[==!=><]=?"
+		  },
+		  {
+			"name": "keyword.operator.logical.test_script",
+			"match": "[&&\\|\\|]"
+		  },
+		  {
+			"name": "keyword.operator.assignment.test_script",
+			"match": "="
+		  },
+		  {
+			"name": "keyword.operator.other.test_script",
+			"match": ":"
+		  }
 		]
 	  }
-	}
+	},
+	"patterns": [
+	  {
+		"include": "#keywords"
+	  },
+	  {
+		"include": "#test-definitions"
+	  },
+	  {
+		"include": "#numbers"
+	  },
+	  {
+		"include": "#strings"
+	  },
+	  {
+		"include": "#regexes"
+	  },
+	  {
+		"include": "#booleans"
+	  },
+	  {
+		"include": "#operators"
+	  }
+	]
   }
