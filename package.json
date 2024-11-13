@@ -3,6 +3,10 @@
   "displayName": "test-script",
   "description": "",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/Huggepugge1/test-script-vscode"
+  },
+  "publisher": "Huggepugge1",
   "engines": {
     "vscode": "^1.95.0"
   },
